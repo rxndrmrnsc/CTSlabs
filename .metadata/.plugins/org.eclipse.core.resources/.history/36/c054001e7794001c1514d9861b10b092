@@ -1,0 +1,16 @@
+package ro.ase.cts.g1098.lab1.main;
+
+import ro.ase.cts.g1098.lab1.main.interfaces.Profitable;
+
+public class Main {
+
+	public static void main(String[] args) {
+
+		// sysout for shortcut
+		System.out.println("Hello. 1st Laboratory");
+		
+		// use the interace as a reference type
+		Profitable reference;
+	}
+
+}
