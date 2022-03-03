@@ -10,7 +10,7 @@ public class Main {
 		// sysout for shortcut
 		System.out.println("Hello. 1st Laboratory");
 		
-		// use the interace as a reference type
+		// use the interface as a reference type
 		Profitable reference;
 		
 		try {
