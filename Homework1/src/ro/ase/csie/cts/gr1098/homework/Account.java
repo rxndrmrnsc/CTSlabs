@@ -5,12 +5,9 @@ public class Account {
 	public double rate;
 	public int daysActive;
 	public AccountType accountType;
-
+	
 	public Account(double loanValue, double rate, AccountType accountType) throws Exception {
-		if (loanValue < 0) {			
-			throw new Exception();
-		}
-		this.loanValue = loanValue;
+		setLoanValue(loanValue);
 		this.rate = rate;
 		this.accountType = accountType;
 	}
@@ -34,6 +31,34 @@ public class Account {
 		this.loanValue = loanValue;
 	}
 
+
+	public double getYearsActive() {
+		return DateConversion.getYears(daysActive);
+	}
+	
+	public double getInterestPrincipal() {
+		return Math.pow(this.rate, this.getYearsActive());
+	}
+	
+	public double getFullInterestPrincipal() {
+		return this.loanValue * (this.getInterestPrincipal() - 1);
+	}
+	
+	public double getFee() {
+		if (this.accountType == AccountType.PREMIUM || this.accountType == AccountType.SUPER_PREMIUM) {
+			return Broker.BROKERS_FEE * this.getFullInterestPrincipal();			
+		}
+		return 0.0;
+	}
+	
+	public static double getTotalFee(Account[] accounts) {
+		double totalFee = 0.0;
+		for (int i = 0; i < accounts.length; i++) {
+			totalFee += accounts[i].getFee();
+		}
+		return totalFee;
+	}
+
 	@Override
 	public String toString() {
 		return "Loan: " + this.loanValue 
@@ -42,20 +67,4 @@ public class Account {
 				+ "; Account Type: " + this.accountType.toString() 
 				+ ";";
 	}
-
-	public static double getTotalFee(Account[] accounts) {
-		double totalFee = 0.0;
-		Account account;
-		int daysInYear = 365;
-		for (int i = 0; i < accounts.length; i++) {
-			account = accounts[i];
-			if (account.accountType == AccountType.PREMIUM || account.accountType == AccountType.SUPER_PREMIUM)
-				totalFee += .0125 * // 1.25% broker's fee
-						(account.loanValue * 
-						Math.pow(account.rate, (account.daysActive / daysInYear)) 
-						- account.loanValue); // interest-principal
-		}
-		return totalFee;
-	}
-
 }
