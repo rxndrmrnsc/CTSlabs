@@ -20,16 +20,13 @@ public class Account {
 	}
 	
 	public double getLoanValue() {
-		System.out.println("The loan value is " + this.loanValue);
 		return this.loanValue;
 	}
 
 	public double getRate() {
-		System.out.println("The rate is " + this.rate);
 		return this.rate;
 	}
 
-	// must have method - the lead has requested it in all classes
 	public double getMonthlyRate() {
 		return this.loanValue * this.rate;
 	}
@@ -41,17 +38,13 @@ public class Account {
 		this.loanValue = loanValue;
 	}
 
+	@Override
 	public String toString() {
 		return "Loan: " + this.loanValue 
 				+ "; Rate: " + this.rate 
 				+ "; Days Active:" + this.daysActive 
 				+ "; Account Type: " + this.accountType 
 				+ ";";
-	}
-
-	public void printClassName() {
-		int variable = 10;
-		System.out.println("This is an account");
 	}
 
 	public static double getTotalFee(Account[] accounts) {
@@ -63,7 +56,7 @@ public class Account {
 			if (account.accountType == Account.PREMIUM || account.accountType == Account.SUPER_PREMIUM)
 				totalFee += .0125 * // 1.25% broker's fee
 						(account.loanValue * 
-						Math.pow(account.rate, (account.daysActive / 365)) 
+						Math.pow(account.rate, (account.daysActive / daysInYear)) 
 						- account.loanValue); // interest-principal
 		}
 		return totalFee;
