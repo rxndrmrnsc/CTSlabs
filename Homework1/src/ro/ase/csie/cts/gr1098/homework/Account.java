@@ -4,13 +4,9 @@ public class Account {
 	public double loanValue;
 	public double rate;
 	public int daysActive;
-	public int accountType;
-	public static final int STANDARD = 0;
-	public static final int BUDGET = 1;
-	public static final int PREMIUM = 2;
-	public static final int SUPER_PREMIUM = 3;
+	public AccountType accountType;
 
-	public Account(double loanValue, double rate, int accountType) throws Exception {
+	public Account(double loanValue, double rate, AccountType accountType) throws Exception {
 		if (loanValue < 0) {			
 			throw new Exception();
 		}
@@ -43,7 +39,7 @@ public class Account {
 		return "Loan: " + this.loanValue 
 				+ "; Rate: " + this.rate 
 				+ "; Days Active:" + this.daysActive 
-				+ "; Account Type: " + this.accountType 
+				+ "; Account Type: " + this.accountType.toString() 
 				+ ";";
 	}
 
@@ -53,7 +49,7 @@ public class Account {
 		int daysInYear = 365;
 		for (int i = 0; i < accounts.length; i++) {
 			account = accounts[i];
-			if (account.accountType == Account.PREMIUM || account.accountType == Account.SUPER_PREMIUM)
+			if (account.accountType == AccountType.PREMIUM || account.accountType == AccountType.SUPER_PREMIUM)
 				totalFee += .0125 * // 1.25% broker's fee
 						(account.loanValue * 
 						Math.pow(account.rate, (account.daysActive / daysInYear)) 
