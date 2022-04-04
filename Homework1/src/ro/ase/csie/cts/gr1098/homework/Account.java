@@ -1,34 +1,29 @@
 package ro.ase.csie.cts.gr1098.homework;
 
 public class Account {
-	public double loanValue;
-	public double rate;
-	public int daysActive;
-	public AccountType accountType;
+	private Loan loan;
+	private int daysActive;
+	private AccountType accountType;
 	
 	public Account(double loanValue, double rate, AccountType accountType) throws Exception {
-		setLoanValue(loanValue);
-		this.rate = rate;
+		loan = new Loan(loanValue, rate);
 		this.accountType = accountType;
 	}
 	
 	public double getLoanValue() {
-		return this.loanValue;
+		return this.loan.getLoanValue();
 	}
 
 	public double getRate() {
-		return this.rate;
+		return this.loan.getRate();
 	}
 
 	public double getMonthlyRate() {
-		return this.loanValue * this.rate;
+		return this.loan.getMonthlyRate();
 	}
 
-	public void setLoanValue(double loanValue) throws Exception {
-		if (loanValue < 0) {
-			throw new Exception();
-		}
-		this.loanValue = loanValue;
+	public void setLoanValue(double loanValue) throws InvalidArgumentException {
+		loan.setLoanValue(loanValue);
 	}
 
 
@@ -37,11 +32,11 @@ public class Account {
 	}
 	
 	public double getInterestPrincipal() {
-		return Math.pow(this.rate, this.getYearsActive());
+		return Math.pow(this.loan.getRate(), this.getYearsActive());
 	}
 	
 	public double getFullInterestPrincipal() {
-		return this.loanValue * (this.getInterestPrincipal() - 1);
+		return this.loan.getLoanValue() * (this.getInterestPrincipal() - 1);
 	}
 	
 	public double getFee() {
@@ -61,10 +56,16 @@ public class Account {
 
 	@Override
 	public String toString() {
-		return "Loan: " + this.loanValue 
-				+ "; Rate: " + this.rate 
-				+ "; Days Active:" + this.daysActive 
-				+ "; Account Type: " + this.accountType.toString() 
-				+ ";";
+		StringBuilder builder = new StringBuilder();
+		builder.append("Loan=");
+		builder.append(loan);
+		builder.append("; DaysActive=");
+		builder.append(daysActive);
+		builder.append("; AccountType=");
+		builder.append(accountType);
+		builder.append(";");
+		return builder.toString();
 	}
+
+	
 }
